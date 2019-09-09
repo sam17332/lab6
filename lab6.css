@@ -1,0 +1,28 @@
+.fondo{
+    width: 450px;
+    height: 75px;
+    border-style: solid;
+    border-bottom-style: hidden;
+    background-color: #006400;
+    position: relative;
+  }
+.titulo{
+    font-size: 30px;
+    text-align: center;
+  }
+.titulo2{
+    font-size: 20px; 
+    position: absolute;
+    left: 5px;
+  }
+
+.grid{
+  display: grid; 
+  background-color: #006400;
+  grid-Template-Rows: 25% 25% 25% 25%; 
+  grid-Template-Columns: 25% 25% 25% 25%;
+  width: 450px; 
+  height: 600px;
+  border-top-style: hidden;
+  border-style: solid;
+}

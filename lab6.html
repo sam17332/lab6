@@ -1,0 +1,236 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <title> Memoria </title>
+    <script src="https://unpkg.com/react@16/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js" crossorigin></script>
+    <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+    <LINK REL=StyleSheet HREF="lab6.css" TYPE="text/css"> 
+  </head>  
+  <body>
+    <div id="root"></div>
+    <script type="text/babel">
+      
+      class Carta extends React.Component{
+        constructor(props) {
+            super(props)
+
+            this.state = {
+                side: 'front',
+            }
+        }
+
+        handle() {
+            this.setState({
+                side: 'back'
+            })
+            this.props.increseReps()
+            this.props.increse()
+            this.props.verificar()
+        }
+
+        render(){
+          const divstyle = {
+            order: this.props.order,
+            width: '60px',
+            height: '100px'
+          }
+
+          const style = {
+            backgroundColor: 'red',
+            transition: 'transform 1.5s ease-out',
+            transform: 'rotateY(0deg)',
+            backgroundImage: 'url(signo.png)',
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat',
+            width: '60px',
+            height: '100px',
+            position: 'absolute',
+            border: 'solid',
+            borderRadius: '10px'
+          }
+
+          const styleback = {
+            transition: 'transform 1.5s ease-out',
+            transform: 'rotateY(180deg)',
+            backgroundColor: 'blue',
+            width: '60px',
+            height: '100px',
+            position: 'absolute',
+            border: 'solid',
+            borderRadius: '10px',
+            backgroundImage: `${this.props.cartaPosition.img}`,
+            backgroundPosition: 'center center',
+            backgroundRepeat: 'no-repeat'
+          }
+          
+          return (
+              <div onClick = {this.handle.bind(this)} style={divstyle}>
+                {this.state.side == 'front' ? <div style={style} /> : <div style={styleback} />}
+              </div>
+          )
+        }
+      }
+
+      class Game extends React.Component{
+        constructor(props) {
+          super(props)
+          this.state = {
+            reps: 0,
+            clicks: 0,
+            pos: 0,
+            carta1: {
+              img: 'url(phd2-.png)'
+            },
+            carta2: {
+              img: 'url(jug2-.png)'
+            },
+            carta3: {
+              img: 'url(stamin2-.png)'
+            },
+            carta4: {
+              img: 'url(mule2-.png)'
+            },
+            carta5: {
+              img: 'url(deadshot2-.png)'
+            },
+            carta6: {
+              img: 'url(speed2-.png)'
+            },
+            carta7: {
+              img: 'url(quick2-.png)'
+            },
+            carta8: {
+              img: 'url(double2-.png)'
+            },
+            carta9: {
+              img: 'url(phd2-.png)'
+            },
+            carta10: {
+              img: 'url(jug2-.png)'
+            },
+            carta11: {
+              img: 'url(stamin2-.png)'
+            },
+            carta12: {
+              img: 'url(mule2-.png)'
+            },
+            carta13: {
+              img: 'url(deadshot2-.png)'
+            },
+            carta14: {
+              img: 'url(speed2-.png)'
+            },
+            carta15: {
+              img: 'url(quick2-.png)'
+            },
+            carta16: {
+              img: 'url(double2-.png)'
+            }
+          }
+          this.cardposs = [ 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16 ]
+          this.cardshuffled = this.shuffle(this.cardposs)
+        }
+        
+        increseReps()
+        {
+            this.setState({
+                reps: (this.state.reps + 1) 
+            })
+        }
+
+        verificar(){
+          var uno
+          var dos
+          if (this.state.clicks == 0) {
+            console.log("----------1");
+            console.log(this.props.cartaPosition);
+            //uno = carta
+          }
+          if (this.state.clicks == 1) {
+            console.log("----------2");
+            //uno = carta
+          }
+        }
+
+        increse()
+        {
+            this.setState({
+                clicks: (this.state.clicks + 1) 
+            })
+            if (this.state.clicks == 1) 
+            {
+              this.setState({
+                clicks: 0
+              })
+            }
+        }
+
+        shuffle(carta) {
+          var j
+          var x
+          var i
+          for (i = carta.length - 1; i > 0; i--) 
+          {
+            j = Math.floor(Math.random() * (i + 1));
+            x = carta[i];
+            carta[i] = carta[j];
+            carta[j] = x;
+          }
+          return carta;
+        }
+        
+        posicion(num) 
+        {
+          console.log(this.cardshuffled[num - 1])
+          return this.cardshuffled[num - 1]
+        }
+
+        render() {
+          return(
+            <div>  
+                <div className="fondo">
+                    <div className="titulo">
+                        Memoria
+                    </div>
+                    <div className="titulo2">
+                        Intentos: {this.state.reps}
+                    </div>
+                    <div>
+                    </div> 
+                </div>
+                <div className="grid">  
+                  <Carta cartaPosition={this.state.carta1} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(1)}/>
+                  <Carta cartaPosition={this.state.carta2} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(2)}/>
+                  <Carta cartaPosition={this.state.carta3} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(3)}/>
+                  <Carta cartaPosition={this.state.carta4} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(4)}/>
+                  <Carta cartaPosition={this.state.carta5} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(5)}/>
+                  <Carta cartaPosition={this.state.carta6} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(6)}/>
+                  <Carta cartaPosition={this.state.carta7} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(7)}/>
+                  <Carta cartaPosition={this.state.carta8} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(8)}/>
+                  <Carta cartaPosition={this.state.carta9} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(9)}/>
+                  <Carta cartaPosition={this.state.carta10} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(10)}/>
+                  <Carta cartaPosition={this.state.carta11} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(11)}/>
+                  <Carta cartaPosition={this.state.carta12} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(12)}/>
+                  <Carta cartaPosition={this.state.carta13} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(13)}/>
+                  <Carta cartaPosition={this.state.carta14} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(14)}/>
+                  <Carta cartaPosition={this.state.carta15} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(15)}/>
+                  <Carta cartaPosition={this.state.carta16} increseReps={this.increseReps.bind(this)} increse={this.increse.bind(this)} verificar={this.verificar.bind(this)} order={this.posicion(16)}/>
+
+                </div>
+            </div>
+          );
+        }
+      }
+      
+      ReactDOM.render(
+        <Game />,
+        document.getElementById('root')
+      );
+      
+    </script>
+  </body>
+</html>
+
+
